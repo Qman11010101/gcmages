@@ -1,7 +1,9 @@
 import argparse
 from typing import Literal
 
-from consts import GAMES, JACKET_PATH_DEFAULT
+import requests
+
+from consts import GAMES, GAMES_DATA, JACKET_PATH_DEFAULT
 
 ImageFormat = Literal["png", "jpg", "webp"]
 
@@ -56,14 +58,19 @@ def parse_args():
 
 def main():
     args = parse_args()
-    # ここに処理を実装
-    games = GAMES if args.game == "all" else [args.game]
-    print(f"Games: {games}")
-    print(f"Directory: {args.dir}")
-    print(f"Format: {args.format}")
-    print(f"Dry Run: {args.dry_run}")
-    print(f"Overwrite: {args.overwrite}")
-    print(f"Interval: {args.interval}")
+    for game in GAMES:
+        if args.game == "all" or args.game == game:
+            music_data = requests.get(GAMES_DATA[game]["music_data"]).json()
+
+            # ここで実際にダウンロード処理を行う関数を呼び出す
+            # download_jackets(g, args.dir, args.format, args.dry_run, args.overwrite, args.interval)
+            print(
+                f"Downloading jackets for {game} to {args.dir} in {args.format} format."
+            )
+            print(
+                f"Dry run: {args.dry_run}, Overwrite: {args.overwrite}, Interval: {args.interval}s"
+            )
+            # 実際のダウンロード処理は省略
 
 
 if __name__ == "__main__":
