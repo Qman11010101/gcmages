@@ -1,11 +1,12 @@
 import argparse
+from logging import getLogger
 from typing import Literal
 
-import requests
-
-from consts import GAMES, GAMES_DATA, JACKET_PATH_DEFAULT
+import app
+from consts import GAMES, JACKET_PATH_DEFAULT
 
 ImageFormat = Literal["png", "jpg", "webp"]
+logger = getLogger(__name__)
 
 
 def parse_args():
@@ -21,7 +22,7 @@ def parse_args():
     )
     parser.add_argument(
         "--dir",
-        help=f"Download destination directory (default: {JACKET_PATH_DEFAULT}[game])",
+        help=f"Download destination directory (default: {JACKET_PATH_DEFAULT}/[game])",
         default=JACKET_PATH_DEFAULT,
     )
     parser.add_argument(
@@ -59,18 +60,9 @@ def parse_args():
 def main():
     args = parse_args()
     for game in GAMES:
-        if args.game == "all" or args.game == game:
-            music_data = requests.get(GAMES_DATA[game]["music_data"]).json()
-
-            # ここで実際にダウンロード処理を行う関数を呼び出す
-            # download_jackets(g, args.dir, args.format, args.dry_run, args.overwrite, args.interval)
-            print(
-                f"Downloading jackets for {game} to {args.dir} in {args.format} format."
-            )
-            print(
-                f"Dry run: {args.dry_run}, Overwrite: {args.overwrite}, Interval: {args.interval}s"
-            )
-            # 実際のダウンロード処理は省略
+        if args.game != "all" and args.game != game:
+            continue
+        app.download(game, args)
 
 
 if __name__ == "__main__":

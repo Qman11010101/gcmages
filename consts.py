@@ -1,4 +1,4 @@
-JACKET_PATH_DEFAULT = "./jackets"
+JACKET_PATH_DEFAULT = "./jacket"
 
 GAMES = [
     "chunithm",
