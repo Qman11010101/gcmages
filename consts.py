@@ -1,6 +1,4 @@
-import platform
-
-JACKET_PATH = "/var/www/html/jacket/" if platform.system() != "Windows" else "./jacket"
+JACKET_PATH_DEFAULT = "./jackets"
 
 GAMES = {
     "CHUNITHM": {
