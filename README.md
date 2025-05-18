@@ -16,13 +16,15 @@ uv sync
 `main.py`を実行することで、楽曲ジャケット画像をダウンロードできます。
 デフォルトでは、3機種全ての画像がダウンロードされます。
 ```
-python main.py [chunithm|ongeki|maimai] [--dir DIR_PATH] [--format (png|jpg|webp)] [--overwrite] [--interval INTERVAL] [--dry-run] 
+python main.py [GAME] [--dir DIR_PATH] [--format (png|jpg|webp)] [--overwrite] [--interval INTERVAL] [--dry-run] 
 ```
 
 ### 引数
-- `chunithm` : CHUNITHMの楽曲ジャケット画像をダウンロードします。
-- `ongeki` : オンゲキの楽曲ジャケット画像をダウンロードします。
-- `maimai` : maimaiの楽曲ジャケット画像をダウンロードします。
+- `GAME` : ダウンロードするゲームを指定します。
+  - `chunithm` : CHUNITHMの楽曲ジャケット画像をダウンロードします。
+  - `ongeki` : オンゲキの楽曲ジャケット画像をダウンロードします。
+  - `maimai` : maimaiの楽曲ジャケット画像をダウンロードします。
+  - `all` : 全てのゲームの楽曲ジャケット画像をダウンロードします。
 - `--dir DIR_PATH` : ダウンロード先のディレクトリを指定します。デフォルトは`./jacket/[chunithm|ongeki|maimai]`です。
 - `--format (png|jpg|webp)` : ダウンロードする画像のフォーマットを指定します。デフォルトは`webp`です。
   - `png` : PNG形式でダウンロードします。
