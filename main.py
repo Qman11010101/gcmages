@@ -1,51 +1,55 @@
 import argparse
 from typing import Literal
 
+from consts import GAMES, JACKET_PATH_DEFAULT
+
 ImageFormat = Literal["png", "jpg", "webp"]
 
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="SEGAの音楽ゲーム3機種のジャケット画像をダウンロードするツール"
+        description="A tool to download jacket images from three SEGA rhythm games"
     )
     parser.add_argument(
         "game",
-        nargs="?",  # 引数を省略可能にする
-        choices=["chunithm", "ongeki", "maimai", "all"],
-        help="ダウンロードする対象のゲーム (all: 全てのゲーム)",
+        nargs="?",  # optional
+        choices=GAMES + ["all"],
+        help="Target game to download (all: download for all games)",
         default="all",
     )
     parser.add_argument(
-        "--dir", help="ダウンロード先のディレクトリ (デフォルト: ./jacket/[game])"
+        "--dir",
+        help=f"Download destination directory (default: {JACKET_PATH_DEFAULT}[game])",
+        default=JACKET_PATH_DEFAULT,
     )
     parser.add_argument(
         "--format",
         choices=["png", "jpg", "webp"],
         default="webp",
-        help="画像フォーマット (デフォルト: webp)",
+        help="Image format (default: webp)",
     )
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="実際にはダウンロードせず、ファイル名のみを表示",
+        help="Display filenames only without actually downloading",
     )
     parser.add_argument(
         "--overwrite",
         action="store_true",
-        help="キャッシュを無視して全ての画像を再ダウンロード",
+        help="Re-download all images ignoring cache",
     )
     parser.add_argument(
         "--interval",
         type=float,
         default=1.0,
-        help="ダウンロード間隔（秒、デフォルト: 1.0）",
+        help="Download interval in seconds (default: 1.0)",
     )
 
     args = parser.parse_args()
 
     # 間隔が1秒未満の場合はエラー
     if args.interval < 1.0:
-        parser.error("--interval は1秒以上を指定してください")
+        parser.error("--interval must be 1.0 seconds or greater")
 
     return args
 
@@ -53,7 +57,7 @@ def parse_args():
 def main():
     args = parse_args()
     # ここに処理を実装
-    games = ["chunithm", "ongeki", "maimai"] if args.game == "all" else [args.game]
+    games = GAMES if args.game == "all" else [args.game]
     print(f"Games: {games}")
     print(f"Directory: {args.dir}")
     print(f"Format: {args.format}")
