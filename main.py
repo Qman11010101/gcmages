@@ -50,7 +50,6 @@ def parse_args():
 
     args = parser.parse_args()
 
-    # 間隔が1秒未満の場合はエラー
     if args.interval < 1.0:
         parser.error("--interval must be 1.0 seconds or greater")
 
